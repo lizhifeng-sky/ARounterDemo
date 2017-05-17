@@ -16,6 +16,7 @@ import lzf.baselibrary.network.normal.BaseRequestMode;
 import lzf.baselibrary.network.normal.MyCallBack;
 import lzf.baselibrary.network.normal.SingleRetrofit;
 import lzf.baselibrary.network.rx.LoadSubscriber;
+import lzf.baselibrary.network.rx.OnSuccessListener;
 import lzf.baselibrary.network.rx.RxSingleRetrofit;
 import lzf.baselibrary.network.rx.SubscriberOnNextListener;
 import retrofit2.Call;
@@ -105,9 +106,9 @@ public class TestActivity extends AppCompatActivity {
 //                    }
 //                };
 //                RxSingleRetrofit.getInstance().getStartView(2,new LoadSubscriber<>(subscriberOnNextListener1,TestActivity.this,null));
-                SubscriberOnNextListener<List<GuideBean>> subscriberOnNextListener=new SubscriberOnNextListener<List<GuideBean>>() {
+                OnSuccessListener<List<GuideBean>> onSuccessListener=new OnSuccessListener<List<GuideBean>>() {
                     @Override
-                    public void onNext(List<GuideBean> guideBeen) {
+                    public void onSuccess(List<GuideBean> guideBeen) {
                         StringBuilder sb=new StringBuilder();
                         for (int i = 0; i < guideBeen.size(); i++) {
                             sb.append(guideBeen.get(i).toString());
@@ -115,7 +116,7 @@ public class TestActivity extends AppCompatActivity {
                         textView.setText(sb);
                     }
                 };
-                RxSingleRetrofit.getInstance().getStartView2(2,new LoadSubscriber<>(subscriberOnNextListener,TestActivity.this,null));
+                RxSingleRetrofit.getInstance().getText2(2,onSuccessListener,TestActivity.this);
             }
         });
 //        SubscriberOnNextListener<BaseRequestMode<User>> subscriberOnNextListener=new SubscriberOnNextListener<BaseRequestMode<User>>() {

@@ -1,9 +1,6 @@
 package lzf.baselibrary.network.rx;
 
-import java.util.List;
 import java.util.Map;
-
-import lzf.baselibrary.bean.GuideBean;
 import lzf.baselibrary.bean.User;
 import lzf.baselibrary.network.normal.BaseRequestMode;
 import retrofit2.http.Field;
@@ -14,8 +11,9 @@ import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
-import retrofit2.http.Url;
 import rx.Observable;
+
+import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
 
 /**
  * Created by Administrator on 2017/5/17 0017.
@@ -50,7 +48,7 @@ public interface RxAPIService {
     * */
     @FormUrlEncoded
     @POST("api/app/startView")
-    Observable<BaseRequestMode<List<GuideBean>>> getStartView(@Field("appType") int type);
+    Observable<BaseRequestMode> getStartView(@Field("appType") int type);
     //参数较多
     @FormUrlEncoded
     @POST("users//111/222")

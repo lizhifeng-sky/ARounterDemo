@@ -1,5 +1,7 @@
 package lzf.baselibrary.network.rx;
 
+import android.content.Context;
+
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -23,6 +25,7 @@ public class RxSingleRetrofit {
     public static final int DEFAULT_TIMEOUT = 5;
     private RxAPIService apiService;
     private static RxSingleRetrofit mInstance;
+    private OnSuccessListener onSuccessListener;
 
     private RxSingleRetrofit() {
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
@@ -73,6 +76,17 @@ public class RxSingleRetrofit {
     }
 
     public void getStartView(int type, Subscriber<BaseRequestMode<List<GuideBean>>> subscriber) {
+//        apiService.getStartView(type)
+//                .subscribeOn(Schedulers.io())
+//                .unsubscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(subscriber);
+    }
+
+    public void getStartView2(int type,
+                              SubscriberOnNextListener list_guide,
+                              Context context) {
+        LoadSubscriber<BaseRequestMode> subscriber = new LoadSubscriber<>(list_guide, context, null);
         apiService.getStartView(type)
                 .subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io())
@@ -80,30 +94,37 @@ public class RxSingleRetrofit {
                 .subscribe(subscriber);
     }
 
-    public void getStartView2(int type, Subscriber<List<GuideBean>> subscriber) {
-        apiService.getStartView(type)
-                .subscribeOn(Schedulers.io())
+    public <T> void getText(int type, final OnSuccessListener on, Context context) {
+        Observable<T> o = apiService.getStartView(type).map(
+                new Func1<BaseRequestMode, T>() {
+                    @Override
+                    public T call(BaseRequestMode tBaseRequestMode) {
+                        return (T) tBaseRequestMode.getData();
+                    }
+                });
+        LoadSubscriber<T> sub = new LoadSubscriber<>(new SubscriberOnNextListener<T>() {
+            @Override
+            public void onNext(T t) {
+                on.onSuccess(t);
+            }
+        }, context, null);
+        o.subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .map(new Func1<BaseRequestMode, List<GuideBean>>() {
-                    @Override
-                    public List<GuideBean> call(BaseRequestMode baseRequestMode) {
-                        return (List<GuideBean>) baseRequestMode.getData();
-                    }
-
-                }).subscribe(subscriber);
+                .subscribe(sub);
     }
-    public <T> T getText(int type,Class<T> c){
+
+    public <T> void getText2(int type, final OnSuccessListener<T> on, Context context) {
+        LoadSubscriber sub = new LoadSubscriber<>(new SubscriberOnNextListener<BaseRequestMode<T>>() {
+            @Override
+            public void onNext(BaseRequestMode<T> tBaseRequestMode) {
+                on.onSuccess(tBaseRequestMode.getData());
+            }
+        }, context, null);
         apiService.getStartView(type)
                 .subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .map(new Func1<BaseRequestMode, T>() {
-                    @Override
-                    public T call(BaseRequestMode baseRequestMode) {
-                        return (T) baseRequestMode.getData();
-                    }
-                }).subscribe(c);
-        return
+                .subscribe(sub);
     }
 }
