@@ -1,0 +1,4 @@
+include ':app',
+        ':baselibrary',
+        ':moduleone',
+        ':module_two'

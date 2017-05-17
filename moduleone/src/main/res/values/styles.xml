@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="module_one_AppBaseTheme" parent="Theme.AppCompat.Light.NoActionBar"/>
+    <!-- Application theme. -->
+    <style name="module_one_AppTheme" parent="module_one_AppBaseTheme">
+        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+        <item name="android:windowNoTitle">true</item>
+        <!--<item name="android:windowBackground">@drawable/load</item>-->
+    </style>
+</resources>

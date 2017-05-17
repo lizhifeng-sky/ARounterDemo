@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="module_one_GifView">
+        <attr name="module_one_gif" format="reference" />
+        <attr name="module_one_paused" format="boolean" />
+    </declare-styleable>
+    <declare-styleable name="module_one_CustomTheme">
+        <attr name="module_one_gifViewStyle" format="reference" />
+    </declare-styleable>
+</resources>

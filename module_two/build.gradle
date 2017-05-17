@@ -1,0 +1,49 @@
+if (Boolean.parseBoolean(ModuleTwoIsModule)) {
+    apply plugin: 'com.android.library'
+}else {
+    apply plugin: 'com.android.application'
+}
+
+android {
+    compileSdkVersion Integer.parseInt(COMPILE_SDK_VERSION)
+    buildToolsVersion BUILDTOOLS_VERSION
+
+    defaultConfig {
+        minSdkVersion Integer.parseInt(MIN_SDK_VERSION)
+        targetSdkVersion Integer.parseInt(TARGET_SDK_VERSION)
+        versionCode 1
+        versionName "1.0"
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [moduleName : project.getName()]
+            }
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    sourceSets{
+        main{
+            if (Boolean.parseBoolean(ModuleTwoIsModule)){
+                manifest.srcFile 'src/main/debug/AndroidManifest.xml'
+            }else {
+                manifest.srcFile 'src/main/release/AndroidManifest.xml'
+            }
+        }
+        resourcePrefix "module_two_"
+    }
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    testCompile 'junit:junit:4.12'
+
+    //基础库
+    compile 'com.alibaba:arouter-api:1.2.1.1'
+    annotationProcessor 'com.alibaba:arouter-compiler:1.0.3'
+    compile project(':baselibrary')
+    //模块内的库
+}
