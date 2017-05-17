@@ -92,6 +92,18 @@ public class RxSingleRetrofit {
                     }
 
                 }).subscribe(subscriber);
-
+    }
+    public <T> T getText(int type,Class<T> c){
+        apiService.getStartView(type)
+                .subscribeOn(Schedulers.io())
+                .unsubscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .map(new Func1<BaseRequestMode, T>() {
+                    @Override
+                    public T call(BaseRequestMode baseRequestMode) {
+                        return (T) baseRequestMode.getData();
+                    }
+                }).subscribe(c);
+        return
     }
 }
