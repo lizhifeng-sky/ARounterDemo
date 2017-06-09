@@ -1,4 +1,4 @@
-package lzf.baselibrary.network.rx;
+package lzf.baselibrary.network;
 
 import android.content.Context;
 import android.widget.Toast;
@@ -6,20 +6,21 @@ import android.widget.Toast;
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 
+import lzf.baselibrary.model.SubscriberOnNextListener;
 import rx.Subscriber;
 
 /**
  * Created by Administrator on 2017/5/17 0017.
  */
-public class LoadSubscriber<T> extends Subscriber<T> implements CancelLoadListener {
-    private SubscriberOnNextListener<T> subscriberOnNextListener;
+public class LoadSubscriber<T> extends Subscriber<T> implements CancelLoadListener{
+    private OnLoadStateListener<T> onLoadStateListener;
     private Context context;
     private LoadDialogHandler loadDialogHandler;
 
-    public LoadSubscriber(SubscriberOnNextListener<T> subscriberOnNextListener,
+    public LoadSubscriber(OnLoadStateListener<T> onLoadStateListener,
                           Context context,
                           LoadDialogHandler loadDialogHandler) {
-        this.subscriberOnNextListener = subscriberOnNextListener;
+        this.onLoadStateListener = onLoadStateListener;
         this.context = context;
         if (loadDialogHandler == null) {
             this.loadDialogHandler = new LoadDialogHandler(context);
@@ -37,7 +38,7 @@ public class LoadSubscriber<T> extends Subscriber<T> implements CancelLoadListen
 
     @Override
     public void onCompleted() {
-        dismiss();
+        loadDialogHandler.dismiss();
     }
 
     @Override
@@ -50,13 +51,15 @@ public class LoadSubscriber<T> extends Subscriber<T> implements CancelLoadListen
             e.printStackTrace();
             Toast.makeText(context, "error:" + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
-        dismiss();
+        loadDialogHandler.onFailure(e);
+        onLoadStateListener.onFailure(e);
     }
 
     @Override
     public void onNext(T t) {
-        if (subscriberOnNextListener != null) {
-            subscriberOnNextListener.onNext(t);
+        loadDialogHandler.onSuccess();
+        if (onLoadStateListener != null) {
+            onLoadStateListener.onSuccess(t);
         }
     }
 
@@ -64,20 +67,20 @@ public class LoadSubscriber<T> extends Subscriber<T> implements CancelLoadListen
     @Override
     public void onStart() {
         super.onStart();
-        show();
+        loadDialogHandler.onLoading();
     }
 
-    private void show() {
-        if (loadDialogHandler != null) {
-            loadDialogHandler.obtainMessage(LoadDialogHandler.SHOW).sendToTarget();
-        }
-    }
+//    private void show() {
+//        if (loadDialogHandler != null) {
+//            loadDialogHandler.obtainMessage(LoadDialogHandler.SHOW).sendToTarget();
+//        }
+//    }
 
-    private void dismiss() {
-        if (loadDialogHandler != null) {
-            loadDialogHandler.obtainMessage(LoadDialogHandler.DISMISS).sendToTarget();
-            loadDialogHandler = null;
-            onCancelLoad();
-        }
-    }
+//    private void dismiss() {
+//        if (loadDialogHandler != null) {
+//            loadDialogHandler.obtainMessage(LoadDialogHandler.DISMISS).sendToTarget();
+//            loadDialogHandler = null;
+//            onCancelLoad();
+//        }
+//    }
 }

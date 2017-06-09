@@ -1,8 +1,12 @@
-package lzf.baselibrary.network.rx;
+package lzf.baselibrary.network;
 
+import java.util.List;
 import java.util.Map;
-import lzf.baselibrary.bean.User;
-import lzf.baselibrary.network.normal.BaseRequestMode;
+
+import lzf.baselibrary.bean.CityBean;
+import lzf.baselibrary.bean.GuideBean;
+import lzf.baselibrary.bean.UserBean;
+import lzf.baselibrary.model.BaseRequestMode;
 import retrofit2.http.Field;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
@@ -13,21 +17,20 @@ import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
 import rx.Observable;
 
-import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
-
 /**
  * Created by Administrator on 2017/5/17 0017.
  */
-public interface RxAPIService {
-    String BASE_URL="http://new.antwk.com/";
+public interface RxAPIService{
+    String BASE_URL = "http://new.antwk.com/";
+
     /*
      * http://base_url/springmvc_users/user/zhy
      * */
     @GET("springmvc_users/user/{username}")
-    Observable<BaseRequestMode<User>> getUser(@Path("username") String username);
+    Observable<BaseRequestMode<UserBean>> getUser(@Path("username") String username);
 
     @GET("user/login")
-    Observable<BaseRequestMode<User>> doLogin(@Query("email") String email, @Query("password") String pwd);
+    Observable<BaseRequestMode<UserBean>> doLogin(@Query("email") String email, @Query("password") String pwd);
 
     //请求静态url地址
     //无参数
@@ -41,28 +44,41 @@ public interface RxAPIService {
     同样的也会抛出java.lang.IllegalArgumentException:FormUrlEncoded can only be specified on HTTP methods with request body (e.g., @POST).的错误异常。
     * */
     @POST("users/111/222")
-    Observable<User> getPost();
+    Observable<UserBean> getPost();
+
     //少数参数
      /*
     *1:android X ；2:android XX；3:IOS X ；4:IOS XX ；5:IOS XXX
     * */
     @FormUrlEncoded
     @POST("api/app/startView")
-    Observable<BaseRequestMode> getStartView(@Field("appType") int type);
+    Observable<BaseRequestMode<List<GuideBean>>> getStartView(@Field("appType") int type);
+    @FormUrlEncoded
+    @POST("api/city/list")
+    Observable<BaseRequestMode<List<CityBean>>> getCityInfo();
+    //少数参数
+     /*
+    *1:android X ；2:android XX；3:IOS X ；4:IOS XX ；5:IOS XXX
+    * */
+    @FormUrlEncoded
+    @POST("api/app/startView")
+    Observable<BaseRequestMode<List<GuideBean>>> getStartView2(@Field("appType") int type);
     //参数较多
     @FormUrlEncoded
     @POST("users//111/222")
-    Observable<User> getPost(@FieldMap Map<String, String> params);
+    Observable<UserBean> getPost(@FieldMap Map<String, String> params);
 
     //无参数
     @GET("users/111/222")
-    Observable<User> getGet();
+    Observable<UserBean> getGet();
+
     //少数参数
     @GET("users/111/222")
-    Observable<User> getGet(@Query("time") long time);
+    Observable<UserBean> getGet(@Query("time") long time);
+
     //参数较多
     @GET("users/111/222")
-    Observable<User> getGet(@QueryMap Map<String, String> params);
+    Observable<UserBean> getGet(@QueryMap Map<String, String> params);
 
     /*
     * @Body  直接传入一个对象  需要后端配合

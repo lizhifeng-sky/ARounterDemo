@@ -1,4 +1,4 @@
-package lzf.baselibrary.network.rx;
+package lzf.baselibrary.network;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -9,7 +9,7 @@ import android.os.Message;
 /**
  * Created by Administrator on 2017/5/17 0017.
  */
-public class LoadDialogHandler extends Handler {
+public class LoadDialogHandler extends Handler implements OnDialogStateListener{
     public static final int SHOW = 1;
     public static final int DISMISS = 2;
     private ProgressDialog progressDialog;
@@ -28,7 +28,7 @@ public class LoadDialogHandler extends Handler {
         //默认不可取消
         this.context = context;
     }
-    private void show() {
+    public void show() {
         if (progressDialog == null) {
             progressDialog = new ProgressDialog(context);
             progressDialog.setCancelable(cancelable);
@@ -46,7 +46,7 @@ public class LoadDialogHandler extends Handler {
         }
     }
 
-    private void dismiss() {
+    public void dismiss() {
         if (progressDialog != null) {
             progressDialog.dismiss();
             progressDialog = null;
@@ -63,5 +63,25 @@ public class LoadDialogHandler extends Handler {
                 dismiss();
                 break;
         }
+    }
+
+    @Override
+    public void onSuccess() {
+
+    }
+
+    @Override
+    public void onFailure(Throwable throwable) {
+
+    }
+
+    @Override
+    public void onLoading() {
+
+    }
+
+    @Override
+    public void retry() {
+
     }
 }

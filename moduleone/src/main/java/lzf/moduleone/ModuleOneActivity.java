@@ -1,17 +1,12 @@
 package lzf.moduleone;
 
-import android.os.Build;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
-import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 
-import lzf.baselibrary.BaseActivity;
+import lzf.baselibrary.base.BaseActivity;
 @Route(path = "/module1/activity")
 public class ModuleOneActivity extends BaseActivity {
     MyTextView textView;

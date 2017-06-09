@@ -1,4 +1,4 @@
-package lzf.baselibrary;
+package lzf.baselibrary.base;
 
 import android.app.Application;
 

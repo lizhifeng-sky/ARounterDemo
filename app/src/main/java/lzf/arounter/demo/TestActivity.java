@@ -1,7 +1,7 @@
 package lzf.arounter.demo;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
 
@@ -9,29 +9,17 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 
 import java.util.List;
 
+import lzf.baselibrary.base.BaseView;
 import lzf.baselibrary.bean.GuideBean;
-import lzf.baselibrary.bean.User;
-import lzf.baselibrary.network.normal.APIService;
-import lzf.baselibrary.network.normal.BaseRequestMode;
-import lzf.baselibrary.network.normal.MyCallBack;
-import lzf.baselibrary.network.normal.SingleRetrofit;
-import lzf.baselibrary.network.rx.LoadSubscriber;
-import lzf.baselibrary.network.rx.OnSuccessListener;
-import lzf.baselibrary.network.rx.RxSingleRetrofit;
-import lzf.baselibrary.network.rx.SubscriberOnNextListener;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-import rx.Subscriber;
-@Route(path = "/moduleMain/test")
-public class TestActivity extends AppCompatActivity {
+import lzf.baselibrary.impl.BasePresenterImpl;
 
+@Route(path = "/moduleMain/test")
+public class TestActivity extends AppCompatActivity implements BaseView<List<GuideBean>> {
+    private TextView start;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(lzf.baselibrary.R.layout.activity_test);
+        setContentView(R.layout.activity_test);
         //常规的方式
 //        Retrofit retrofit = new Retrofit.Builder()
 //                .baseUrl("xxx")
@@ -90,43 +78,67 @@ public class TestActivity extends AppCompatActivity {
 //
 //            }
 //        });
-        //rx封装2
-        final TextView textView= (TextView) findViewById(R.id.start);
-        textView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-//                SubscriberOnNextListener<BaseRequestMode<List<GuideBean>>> subscriberOnNextListener1=new SubscriberOnNextListener<BaseRequestMode<List<GuideBean>>>() {
+
+    }
+
+    public void next(final View view) {
+        setPresenter();
+//                SubscriberOnNextListener<List<GuideBean>> subscriberOnNextListener= new SubscriberOnNextListener<List<GuideBean>>() {
 //                    @Override
-//                    public void onNext(BaseRequestMode<List<GuideBean>> listBaseRequestMode) {
+//                    public void onNext(List<GuideBean> listBaseRequestMode) {
 //                        StringBuilder sb=new StringBuilder();
-//                        for (int i = 0; i < listBaseRequestMode.getData().size(); i++) {
-//                           sb.append(listBaseRequestMode.getData().get(i).toString());
+//                        for (int i = 0; i < listBaseRequestMode.size(); i++) {
+//                            sb.append(listBaseRequestMode.get(i).toString());
 //                        }
-//
+//                        ((TextView)view).setText(sb);
 //                    }
 //                };
-//                RxSingleRetrofit.getInstance().getStartView(2,new LoadSubscriber<>(subscriberOnNextListener1,TestActivity.this,null));
-                OnSuccessListener<List<GuideBean>> onSuccessListener=new OnSuccessListener<List<GuideBean>>() {
-                    @Override
-                    public void onSuccess(List<GuideBean> guideBeen) {
-                        StringBuilder sb=new StringBuilder();
-                        for (int i = 0; i < guideBeen.size(); i++) {
-                            sb.append(guideBeen.get(i).toString());
-                        }
-                        textView.setText(sb);
-                    }
-                };
-                RxSingleRetrofit.getInstance().getText2(2,onSuccessListener,TestActivity.this);
+//        Observable observable=RxSingleRetrofit.getInstance().create().getStartView(2);
+//        LoadSubscriber subscriber = new LoadSubscriber<>(subscriberOnNextListener, this, null);
+//        RxSingleRetrofit.getInstance().getStartView(observable,subscriber);
+
+    }
+
+    @Override
+    public void prepareData() {
+        //todo 数据准备
+    }
+
+    @Override
+    public void findView() {
+        //todo findView
+        start= (TextView) findViewById(R.id.start);
+    }
+
+    @Override
+    public void setListener() {
+        //todo 设置监听
+        start.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mBasePresenter.getData(apiService.getCityInfo(),getApplicationContext());
             }
         });
-//        SubscriberOnNextListener<BaseRequestMode<User>> subscriberOnNextListener=new SubscriberOnNextListener<BaseRequestMode<User>>() {
-//            @Override
-//            public void onNext(BaseRequestMode<User> userBaseRequestMode) {
-//
-//            }
-//        };
-//        RxSingleRetrofit.getInstance().getUser("username", new LoadSubscriber<>(subscriberOnNextListener,this,null) );
+    }
 
+    BasePresenterImpl mBasePresenter;
 
+    @Override
+    public void setPresenter() {
+        mBasePresenter=new BasePresenterImpl(this);
+        //todo 创建presenter
+//        if (mBasePresenter instanceof BasePresenter) {
+        mBasePresenter.getData(apiService.getStartView(2), this);
+//        }
+    }
+
+    @Override
+    public void setViewData(List<GuideBean> guideBeanList) {
+        //todo 将数据展示
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < guideBeanList.size(); i++) {
+            sb.append(guideBeanList.get(i).toString());
+        }
+        start.setText(sb);
     }
 }

@@ -1,4 +1,4 @@
-package lzf.baselibrary.network.normal;
+package lzf.baselibrary.model;
 
 /**
  * Created by Administrator on 2017/5/17 0017.

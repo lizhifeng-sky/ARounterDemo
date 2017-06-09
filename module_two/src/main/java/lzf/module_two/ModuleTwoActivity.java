@@ -6,7 +6,7 @@ import android.view.View;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 
-import lzf.baselibrary.BaseActivity;
+import lzf.baselibrary.base.BaseActivity;
 
 @Route(path = "/module2/activity")
 public class ModuleTwoActivity extends BaseActivity {

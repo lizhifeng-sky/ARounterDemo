@@ -3,7 +3,7 @@ package lzf.baselibrary.bean;
 /**
  * Created by Administrator on 2017/5/17 0017.
  */
-public class User {
+public class UserBean {
     private String name;
     private int age;
 

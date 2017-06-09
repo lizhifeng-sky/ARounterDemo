@@ -3,14 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/ARounterDemo.iml" filepath="$PROJECT_DIR$/ARounterDemo.iml" />
-      <module fileurl="file://$PROJECT_DIR$/ARounterDemo.iml" filepath="$PROJECT_DIR$/ARounterDemo.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/baselibrary/baselibrary.iml" filepath="$PROJECT_DIR$/baselibrary/baselibrary.iml" />
-      <module fileurl="file://$PROJECT_DIR$/baselibrary/baselibrary.iml" filepath="$PROJECT_DIR$/baselibrary/baselibrary.iml" />
       <module fileurl="file://$PROJECT_DIR$/module_two/module_two.iml" filepath="$PROJECT_DIR$/module_two/module_two.iml" />
-      <module fileurl="file://$PROJECT_DIR$/module_two/module_two.iml" filepath="$PROJECT_DIR$/module_two/module_two.iml" />
-      <module fileurl="file://$PROJECT_DIR$/moduleone/moduleone.iml" filepath="$PROJECT_DIR$/moduleone/moduleone.iml" />
       <module fileurl="file://$PROJECT_DIR$/moduleone/moduleone.iml" filepath="$PROJECT_DIR$/moduleone/moduleone.iml" />
     </modules>
   </component>
