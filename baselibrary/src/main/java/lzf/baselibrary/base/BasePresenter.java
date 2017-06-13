@@ -13,4 +13,5 @@ public interface BasePresenter {
     * 获取数据
     * */
     <T> void getData(Observable<BaseRequestMode<T>> t, Context context);
+    <T> void getData(Context context, Observable<BaseRequestMode<T>>... observables);
 }

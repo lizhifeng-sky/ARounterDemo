@@ -10,12 +10,14 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import java.util.List;
 
 import lzf.baselibrary.base.BaseView;
+import lzf.baselibrary.bean.CityBean;
 import lzf.baselibrary.bean.GuideBean;
 import lzf.baselibrary.impl.BasePresenterImpl;
 
 @Route(path = "/moduleMain/test")
-public class TestActivity extends AppCompatActivity implements BaseView<List<GuideBean>> {
+public class TestActivity extends AppCompatActivity implements BaseView {
     private TextView start;
+    private StringBuilder sb = new StringBuilder();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,26 +84,13 @@ public class TestActivity extends AppCompatActivity implements BaseView<List<Gui
     }
 
     public void next(final View view) {
-        setPresenter();
-//                SubscriberOnNextListener<List<GuideBean>> subscriberOnNextListener= new SubscriberOnNextListener<List<GuideBean>>() {
-//                    @Override
-//                    public void onNext(List<GuideBean> listBaseRequestMode) {
-//                        StringBuilder sb=new StringBuilder();
-//                        for (int i = 0; i < listBaseRequestMode.size(); i++) {
-//                            sb.append(listBaseRequestMode.get(i).toString());
-//                        }
-//                        ((TextView)view).setText(sb);
-//                    }
-//                };
-//        Observable observable=RxSingleRetrofit.getInstance().create().getStartView(2);
-//        LoadSubscriber subscriber = new LoadSubscriber<>(subscriberOnNextListener, this, null);
-//        RxSingleRetrofit.getInstance().getStartView(observable,subscriber);
-
+        mBasePresenter.getData(apiService.getStartView(2), this);
     }
 
     @Override
     public void prepareData() {
         //todo 数据准备
+
     }
 
     @Override
@@ -116,7 +105,7 @@ public class TestActivity extends AppCompatActivity implements BaseView<List<Gui
         start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mBasePresenter.getData(apiService.getCityInfo(),getApplicationContext());
+                mBasePresenter.getData(apiService.getCityInfo(),TestActivity.this);
             }
         });
     }
@@ -125,20 +114,26 @@ public class TestActivity extends AppCompatActivity implements BaseView<List<Gui
 
     @Override
     public void setPresenter() {
-        mBasePresenter=new BasePresenterImpl(this);
         //todo 创建presenter
-//        if (mBasePresenter instanceof BasePresenter) {
-        mBasePresenter.getData(apiService.getStartView(2), this);
-//        }
+        mBasePresenter=new BasePresenterImpl(TestActivity.this);
     }
 
     @Override
-    public void setViewData(List<GuideBean> guideBeanList) {
-        //todo 将数据展示
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < guideBeanList.size(); i++) {
-            sb.append(guideBeanList.get(i).toString());
+    public void setViewData(Object o) {
+        if (o instanceof List){
+            List list= (List) o;
+            if (list.get(0) instanceof GuideBean){
+                for (int i = 0; i < list.size(); i++) {
+                    sb.append(list.get(i).toString());
+                }
+                start.setText(sb);
+            }else if (list.get(0) instanceof CityBean){
+                for (int i = 0; i < list.size(); i++) {
+                    sb.append(list.get(i).toString());
+                }
+                start.setText(sb);
+            }
         }
-        start.setText(sb);
     }
+
 }

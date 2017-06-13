@@ -13,20 +13,29 @@ import rx.Observable;
 /**
  * Created by Administrator on 2017/6/9 0009.
  */
-public class BasePresenterImpl implements BasePresenter,OnLoadStateListener{
+public class BasePresenterImpl implements BasePresenter, OnLoadStateListener {
     private BaseModel baseModel;
     private BaseView baseView;
+    private Observable currentObservable;
+    private Context currentContext;
 
     public BasePresenterImpl(BaseView baseView) {
         this.baseView = baseView;
-        baseModel= new BaseModelImpl();
+        baseModel = new BaseModelImpl();
     }
 
     @Override
-    public <T> void getData(Observable<BaseRequestMode<T>> t,
-                        Context context) {
+    public <T> void getData(Observable<BaseRequestMode<T>> observable,
+                            Context context) {
         //
-        baseModel.loadData(t,this,context);
+        currentObservable=observable;
+        currentContext=context;
+        load();
+    }
+
+    @Override
+    public  <T> void getData(Context context, Observable<BaseRequestMode<T>>... observables) {
+        baseModel.loadData(this, context, observables);
     }
 
     @Override
@@ -36,11 +45,14 @@ public class BasePresenterImpl implements BasePresenter,OnLoadStateListener{
 
     @Override
     public void onFailure(Throwable throwable) {
-        Log.e("BasePresenterImpl","onFailure   "+throwable.getMessage());
+        Log.e("BasePresenterImpl", "onFailure   " + throwable.getMessage());
     }
 
     @Override
     public void retry() {
-
+        load();
+    }
+    public void load(){
+        baseModel.loadData(this, currentContext, currentObservable);
     }
 }

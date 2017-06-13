@@ -27,6 +27,7 @@ public class AppApplication extends BaseApplication {
                 if (activity instanceof BaseView){
                     ((BaseView) activity).prepareData();
                     ((BaseView) activity).findView();
+                    ((BaseView) activity).setPresenter();
                     ((BaseView) activity).setListener();
                 }
             }

@@ -1,6 +1,7 @@
 package lzf.baselibrary.network;
 
 import android.content.Context;
+import android.util.Log;
 import android.widget.Toast;
 
 import java.net.ConnectException;
@@ -38,11 +39,13 @@ public class LoadSubscriber<T> extends Subscriber<T> implements CancelLoadListen
 
     @Override
     public void onCompleted() {
+        Log.e("lzf_load","onCompleted");
         loadDialogHandler.dismiss();
     }
 
     @Override
     public void onError(Throwable e) {
+        Log.e("lzf_load","onError");
         if (e instanceof SocketTimeoutException) {
             Toast.makeText(context, "网络中断，请检查您的网络状态", Toast.LENGTH_SHORT).show();
         } else if (e instanceof ConnectException) {
@@ -57,30 +60,18 @@ public class LoadSubscriber<T> extends Subscriber<T> implements CancelLoadListen
 
     @Override
     public void onNext(T t) {
+        Log.e("lzf_load","onNext");
         loadDialogHandler.onSuccess();
         if (onLoadStateListener != null) {
             onLoadStateListener.onSuccess(t);
         }
     }
 
-
     @Override
     public void onStart() {
+        Log.e("lzf_load","onStart");
         super.onStart();
         loadDialogHandler.onLoading();
     }
 
-//    private void show() {
-//        if (loadDialogHandler != null) {
-//            loadDialogHandler.obtainMessage(LoadDialogHandler.SHOW).sendToTarget();
-//        }
-//    }
-
-//    private void dismiss() {
-//        if (loadDialogHandler != null) {
-//            loadDialogHandler.obtainMessage(LoadDialogHandler.DISMISS).sendToTarget();
-//            loadDialogHandler = null;
-//            onCancelLoad();
-//        }
-//    }
 }

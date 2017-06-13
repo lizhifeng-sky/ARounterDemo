@@ -10,8 +10,6 @@ import android.os.Message;
  * Created by Administrator on 2017/5/17 0017.
  */
 public class LoadDialogHandler extends Handler implements OnDialogStateListener{
-    public static final int SHOW = 1;
-    public static final int DISMISS = 2;
     private ProgressDialog progressDialog;
     private Context context;
     private boolean cancelable=false;
@@ -54,30 +52,18 @@ public class LoadDialogHandler extends Handler implements OnDialogStateListener{
     }
 
     @Override
-    public void handleMessage(Message msg) {
-        switch (msg.what) {
-            case SHOW:
-                show();
-                break;
-            case DISMISS:
-                dismiss();
-                break;
-        }
-    }
-
-    @Override
     public void onSuccess() {
-
+        dismiss();
     }
 
     @Override
     public void onFailure(Throwable throwable) {
-
+        progressDialog.setMessage(throwable.getMessage());
     }
 
     @Override
     public void onLoading() {
-
+        show();
     }
 
     @Override

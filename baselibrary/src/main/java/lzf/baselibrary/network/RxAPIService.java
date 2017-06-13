@@ -53,7 +53,7 @@ public interface RxAPIService{
     @FormUrlEncoded
     @POST("api/app/startView")
     Observable<BaseRequestMode<List<GuideBean>>> getStartView(@Field("appType") int type);
-    @FormUrlEncoded
+
     @POST("api/city/list")
     Observable<BaseRequestMode<List<CityBean>>> getCityInfo();
     //少数参数

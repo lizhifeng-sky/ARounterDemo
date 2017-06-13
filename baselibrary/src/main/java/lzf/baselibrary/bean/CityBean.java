@@ -58,4 +58,16 @@ public class CityBean {
     public void setUpdated(String updated) {
         this.updated = updated;
     }
+
+    @Override
+    public String toString() {
+        return "CityBean{" +
+                "created='" + created + '\n' +
+                ", enable='" + enable + '\n' +
+                ", id='" + id + '\n' +
+                ", initial='" + initial + '\n' +
+                ", name='" + name + '\n' +
+                ", updated='" + updated + '\n' +
+                '}';
+    }
 }

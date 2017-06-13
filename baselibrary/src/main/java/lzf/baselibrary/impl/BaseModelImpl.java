@@ -17,15 +17,19 @@ import rx.schedulers.Schedulers;
  */
 public class BaseModelImpl implements BaseModel {
 
+
+
     @Override
-    public <T> void loadData(Observable observable, OnLoadStateListener<T> onLoadStateListener, Context context) {
+    public <T> void loadData(OnLoadStateListener<T> onLoadStateListener, Context context, Observable... observable) {
+
+    }
+
+    @Override
+    public <T> void loadData(OnLoadStateListener<T> onLoadStateListener, Context context, Observable observable) {
         LoadSubscriber subscriber = new LoadSubscriber<>(onLoadStateListener, context, null);
-//        observable.subscribeOn(Schedulers.io())
-//                .unsubscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(subscriber);
         test(observable,subscriber);
     }
+
     public  <T> void test(Observable<BaseRequestMode<T>> observable, Subscriber<T> s) {
         Observable o = observable.map(new Func1<BaseRequestMode<T>, T>() {
             @Override
