@@ -1,6 +1,7 @@
 package lzf.moduleone;
 
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -8,10 +9,10 @@ import com.alibaba.android.arouter.launcher.ARouter;
 
 import lzf.baselibrary.base.BaseActivity;
 @Route(path = "/module1/activity")
-public class ModuleOneActivity extends BaseActivity {
+public class ModuleOneActivity extends AppCompatActivity {
     MyTextView textView;
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.module_one_activity_module_one);
 //        GifView gif1 = (GifView) findViewById(R.id.gif1);

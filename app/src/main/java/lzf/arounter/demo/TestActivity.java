@@ -14,31 +14,36 @@ import lzf.baselibrary.base.BaseFourNetworkView;
 import lzf.baselibrary.base.BaseOneNetworkView;
 import lzf.baselibrary.base.BaseTwoNetworkView;
 import lzf.baselibrary.bean.CityBean;
+import lzf.baselibrary.bean.ConfigBean;
 import lzf.baselibrary.bean.GuideBean;
 import lzf.baselibrary.impl.BasePresenterImpl;
 
 @Route(path = "/moduleMain/test")
-public class TestActivity extends AppCompatActivity implements BaseTwoNetworkView<List<GuideBean>, List<CityBean>> {
+public class TestActivity extends AppCompatActivity implements BaseTwoNetworkView<List<GuideBean>, ConfigBean> {
     private TextView start, second;
     private BasePresenterImpl mBasePresenter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
     }
+
     public void next(final View view) {
         mBasePresenter.getData(apiService.getStartView(2), this);
     }
+
     @Override
     public void setListener() {
         //todo 设置监听
         start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mBasePresenter.getData(apiService.getCityInfo(), TestActivity.this);
+                mBasePresenter.getData(apiService.getConfig(), TestActivity.this);
             }
         });
     }
+
     @Override
     public void getDataT(List<GuideBean> guideBeanList) {
         StringBuilder sb = new StringBuilder();
@@ -47,14 +52,15 @@ public class TestActivity extends AppCompatActivity implements BaseTwoNetworkVie
         }
         second.setText(sb);
     }
+
     @Override
-    public void getDataR(List<CityBean> t) {
+    public void getDataR(ConfigBean t) {
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < t.size(); i++) {
-            sb.append(t.get(i).toString());
-        }
+        sb.append(t.toString());
         start.setText(sb);
     }
+
+
     @Override
     public void prepareData() {
         //todo 数据准备

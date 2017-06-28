@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import lzf.baselibrary.bean.CityBean;
+import lzf.baselibrary.bean.ConfigBean;
 import lzf.baselibrary.bean.GuideBean;
 import lzf.baselibrary.bean.UserBean;
 import lzf.baselibrary.model.BaseRequestMode;
@@ -56,6 +57,9 @@ public interface RxAPIService{
 
     @POST("api/city/list")
     Observable<BaseRequestMode<List<CityBean>>> getCityInfo();
+
+    @POST("api/app/getConfig")
+    Observable<BaseRequestMode<ConfigBean>> getConfig();
     //少数参数
      /*
     *1:android X ；2:android XX；3:IOS X ；4:IOS XX ；5:IOS XXX

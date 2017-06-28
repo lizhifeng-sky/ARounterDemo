@@ -12,6 +12,7 @@ import rx.Observable;
 
 /**
  * Created by Administrator on 2017/6/26 0026.
+ * 这是一个示例  自定义presenter
  */
 public class BaseOneNetworkPresenterImpl<T> implements BasePresenter,OnLoadStateListener<T>{
     private BaseModel baseModel;
