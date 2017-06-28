@@ -17,13 +17,9 @@ import rx.schedulers.Schedulers;
  */
 public class BaseModelImpl implements BaseModel {
 
-
-
     @Override
     public <T> void loadData(OnLoadStateListener<T> onLoadStateListener, Context context, Observable... observable) {
-
     }
-
     @Override
     public <T> void loadData(OnLoadStateListener<T> onLoadStateListener, Context context, Observable observable) {
         LoadSubscriber subscriber = new LoadSubscriber<>(onLoadStateListener, context, null);

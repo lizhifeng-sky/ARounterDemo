@@ -9,6 +9,7 @@ import lzf.baselibrary.base.BaseApplication;
 import lzf.baselibrary.base.BaseFourNetworkView;
 import lzf.baselibrary.base.BaseOneNetworkView;
 import lzf.baselibrary.base.BaseTwoNetworkView;
+import lzf.baselibrary.base.BaseView;
 
 /**
  * Created by Administrator on 2017/4/27 0027.
@@ -26,11 +27,11 @@ public class AppApplication extends BaseApplication {
 
             @Override
             public void onActivityStarted(Activity activity) {
-                if (activity instanceof BaseTwoNetworkView){
-                    ((BaseTwoNetworkView) activity).prepareData();
-                    ((BaseTwoNetworkView) activity).findView();
-                    ((BaseTwoNetworkView) activity).setPresenter();
-                    ((BaseTwoNetworkView) activity).setListener();
+                if (activity instanceof BaseView){
+                    ((BaseView) activity).prepareData();
+                    ((BaseView) activity).findView();
+                    ((BaseView) activity).setPresenter();
+                    ((BaseView) activity).setListener();
                 }
             }
 
