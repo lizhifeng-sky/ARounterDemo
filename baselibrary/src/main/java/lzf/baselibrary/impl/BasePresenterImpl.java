@@ -125,6 +125,7 @@ public class BasePresenterImpl<T> implements BasePresenter, OnLoadStateListener<
         }
 
     }
+
     private List<String> getRequestType(Class ca, String baseViewType) {
         List<String> types = new ArrayList<>();
         Type[] genType = ca.getGenericInterfaces();

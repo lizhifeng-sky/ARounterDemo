@@ -22,17 +22,14 @@ import lzf.baselibrary.impl.BasePresenterImpl;
 public class TestActivity extends AppCompatActivity implements BaseTwoNetworkView<List<GuideBean>, ConfigBean> {
     private TextView start, second;
     private BasePresenterImpl mBasePresenter;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
     }
-
     public void next(final View view) {
         mBasePresenter.getData(apiService.getStartView(2), this);
     }
-
     @Override
     public void setListener() {
         //todo 设置监听
@@ -43,7 +40,6 @@ public class TestActivity extends AppCompatActivity implements BaseTwoNetworkVie
             }
         });
     }
-
     @Override
     public void getDataT(List<GuideBean> guideBeanList) {
         StringBuilder sb = new StringBuilder();
@@ -52,7 +48,6 @@ public class TestActivity extends AppCompatActivity implements BaseTwoNetworkVie
         }
         second.setText(sb);
     }
-
     @Override
     public void getDataR(ConfigBean t) {
         StringBuilder sb = new StringBuilder();
