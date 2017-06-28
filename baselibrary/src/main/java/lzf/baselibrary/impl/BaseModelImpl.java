@@ -27,10 +27,10 @@ public class BaseModelImpl implements BaseModel {
     @Override
     public <T> void loadData(OnLoadStateListener<T> onLoadStateListener, Context context, Observable observable) {
         LoadSubscriber subscriber = new LoadSubscriber<>(onLoadStateListener, context, null);
-        test(observable,subscriber);
+        loadFromNetwork(observable,subscriber);
     }
 
-    public  <T> void test(Observable<BaseRequestMode<T>> observable, Subscriber<T> s) {
+    public  <T> void loadFromNetwork(Observable<BaseRequestMode<T>> observable, Subscriber<T> s) {
         Observable o = observable.map(new Func1<BaseRequestMode<T>, T>() {
             @Override
             public T call(BaseRequestMode<T> tBaseRequestMode) {

@@ -4,9 +4,9 @@ import lzf.baselibrary.network.RxAPIService;
 import lzf.baselibrary.network.RxSingleRetrofit;
 
 /**
- * Created by Administrator on 2017/6/9 0009.
+ * Created by Administrator on 2017/6/26 0026.
  */
-public interface BaseView<T> {
+public interface BaseView {
     RxAPIService apiService= RxSingleRetrofit.getInstance().create();
     /*
     * 准备数据 获得传值
@@ -24,12 +24,4 @@ public interface BaseView<T> {
     * 设置presenter
     * */
     void setPresenter();
-//    /*
-//    * 获取数据
-//    * */
-//    void getViewData();
-    /*
-    * 设置view数据
-    * */
-    void setViewData(T t);
 }

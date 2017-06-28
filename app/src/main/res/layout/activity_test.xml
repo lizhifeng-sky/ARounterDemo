@@ -10,7 +10,8 @@
     <TextView
         android:id="@+id/start"
         android:layout_width="match_parent"
-        android:text="开始"
+        android:text="城市"
+        android:maxHeight="200dp"
         android:padding="9dp"
         android:layout_height="wrap_content" />
     <TextView
@@ -18,8 +19,9 @@
         android:layout_below="@id/start"
         android:layout_marginTop="200dp"
         android:padding="9dp"
+        android:maxHeight="200dp"
         android:layout_width="match_parent"
-        android:text="开始"
+        android:text="引导"
         android:onClick="next"
         android:layout_height="wrap_content" />
 </RelativeLayout>
