@@ -2,7 +2,9 @@ package lzf.arounter.demo;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -16,20 +18,26 @@ import lzf.baselibrary.base.BaseTwoNetworkView;
 import lzf.baselibrary.bean.CityBean;
 import lzf.baselibrary.bean.ConfigBean;
 import lzf.baselibrary.bean.GuideBean;
+import lzf.baselibrary.image.ImageLoaderManager;
+import lzf.baselibrary.image.ImageLoaderOptions;
 import lzf.baselibrary.impl.BasePresenterImpl;
 
 @Route(path = "/moduleMain/test")
 public class TestActivity extends AppCompatActivity implements BaseTwoNetworkView<List<GuideBean>, ConfigBean> {
     private TextView start, second;
     private BasePresenterImpl mBasePresenter;
+    private ImageView imageView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
     }
+
     public void next(final View view) {
         mBasePresenter.getData(apiService.getStartView(2), this);
     }
+
     @Override
     public void setListener() {
         //todo 设置监听
@@ -40,6 +48,7 @@ public class TestActivity extends AppCompatActivity implements BaseTwoNetworkVie
             }
         });
     }
+
     @Override
     public void getDataT(List<GuideBean> guideBeanList) {
         StringBuilder sb = new StringBuilder();
@@ -48,6 +57,7 @@ public class TestActivity extends AppCompatActivity implements BaseTwoNetworkVie
         }
         second.setText(sb);
     }
+
     @Override
     public void getDataR(ConfigBean t) {
         StringBuilder sb = new StringBuilder();
@@ -67,6 +77,8 @@ public class TestActivity extends AppCompatActivity implements BaseTwoNetworkVie
         //todo findView
         start = (TextView) findViewById(R.id.start);
         second = (TextView) findViewById(R.id.second);
+        imageView= (ImageView) findViewById(R.id.image);
+        ImageLoaderManager.getInstance().showImage(ImageLoaderManager.getDefaultOptions(imageView,""));
     }
 
     @Override
