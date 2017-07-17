@@ -10,6 +10,7 @@ import lzf.baselibrary.base.BaseFourNetworkView;
 import lzf.baselibrary.base.BaseOneNetworkView;
 import lzf.baselibrary.base.BaseTwoNetworkView;
 import lzf.baselibrary.base.BaseView;
+import lzf.baselibrary.image.ImageLoaderManager;
 
 /**
  * Created by Administrator on 2017/4/27 0027.
@@ -19,6 +20,7 @@ public class AppApplication extends BaseApplication {
     public void onCreate() {
         super.onCreate();
         ARouter.init(this);
+        ImageLoaderManager.getInstance().init(this);
         registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
             @Override
             public void onActivityCreated(Activity activity, Bundle bundle) {
