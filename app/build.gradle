@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-
+apply plugin: 'com.neenbedankt.android-apt'
 android {
     compileSdkVersion Integer.parseInt(COMPILE_SDK_VERSION)
     buildToolsVersion BUILDTOOLS_VERSION
@@ -47,16 +47,17 @@ android {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
-
     compile 'com.alibaba:arouter-api:1.2.1.1'
     annotationProcessor 'com.alibaba:arouter-compiler:1.0.3'
     compile project(':baselibrary')
-
     if (Boolean.parseBoolean(ModuleOneIsModule)) {
         compile project(':moduleone')
     }
     if (Boolean.parseBoolean(ModuleTwoIsModule)) {
         compile project(':module_two')
     }
+    compile project(':annotation')
+    compile project(':api')
+    apt project(':process')
 }
 

@@ -6,20 +6,19 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.example.Http;
+import com.example.HttpType;
 
-import java.util.ArrayList;
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Method;
 import java.util.List;
 
-import lzf.baselibrary.base.BaseFourNetworkView;
-import lzf.baselibrary.base.BaseOneNetworkView;
+import lzf.api.LzfHttpBinder;
+import lzf.api.NetUtils;
 import lzf.baselibrary.base.BaseTwoNetworkView;
-import lzf.baselibrary.bean.CityBean;
 import lzf.baselibrary.bean.ConfigBean;
 import lzf.baselibrary.bean.GuideBean;
-import lzf.baselibrary.image.ImageLoaderManager;
-import lzf.baselibrary.image.ImageLoaderOptions;
 import lzf.baselibrary.impl.BasePresenterImpl;
 
 @Route(path = "/moduleMain/test")
@@ -32,6 +31,7 @@ public class TestActivity extends AppCompatActivity implements BaseTwoNetworkVie
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
+
     }
 
     public void next(final View view) {
@@ -44,7 +44,9 @@ public class TestActivity extends AppCompatActivity implements BaseTwoNetworkVie
         start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mBasePresenter.getData(apiService.getConfig(), TestActivity.this);
+                LzfHttpBinder.bind(TestActivity.this);
+//                test();
+//                mBasePresenter.getData(apiService.getConfig(), TestActivity.this);
             }
         });
     }
@@ -78,13 +80,39 @@ public class TestActivity extends AppCompatActivity implements BaseTwoNetworkVie
         start = (TextView) findViewById(R.id.start);
         second = (TextView) findViewById(R.id.second);
         imageView= (ImageView) findViewById(R.id.image);
-        ImageLoaderManager.getInstance().showImage(ImageLoaderManager.getDefaultOptions(imageView,""));
     }
 
     @Override
     public void setPresenter() {
         //todo 创建presenter
         mBasePresenter = new BasePresenterImpl(TestActivity.this);
+    }
+    @Http(url = "test", type = HttpType.POST)
+    public void test(String test){
+        Log.e("lzf_test",test);
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                //从网络获取数据
+//                final String response = NetUtils.post("111","2");
+//                //向Handler发送处理操作
+//                Log.e("Lzf-test","网络请求的数据是："+response);
+//            }
+//        }).start();
+    }
+
+    @Http(url = "test2", type = HttpType.POST)
+    public void test2(String test){
+        Log.e("lzf_test2",test);
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                //从网络获取数据
+//                final String response = NetUtils.post("111","2");
+//                //向Handler发送处理操作
+//                Log.e("Lzf-test","网络请求的数据是："+response);
+//            }
+//        }).start();
     }
 
 }

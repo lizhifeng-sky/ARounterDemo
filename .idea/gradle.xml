@@ -8,19 +8,25 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/annotation" />
+            <option value="$PROJECT_DIR$/api" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/baselibrary" />
             <option value="$PROJECT_DIR$/module_two" />
             <option value="$PROJECT_DIR$/moduleone" />
+            <option value="$PROJECT_DIR$/process" />
           </set>
         </option>
         <option name="myModules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/annotation" />
+            <option value="$PROJECT_DIR$/api" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/baselibrary" />
             <option value="$PROJECT_DIR$/module_two" />
             <option value="$PROJECT_DIR$/moduleone" />
+            <option value="$PROJECT_DIR$/process" />
           </set>
         </option>
       </GradleProjectSettings>
