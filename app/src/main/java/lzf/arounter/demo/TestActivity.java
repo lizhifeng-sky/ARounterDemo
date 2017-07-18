@@ -1,47 +1,37 @@
 package lzf.arounter.demo;
 
-import android.app.Activity;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
-import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.example.Http;
+import com.example.HttpType;
 
-import java.util.ArrayList;
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Method;
 import java.util.List;
 
-import lzf.baselibrary.base.BaseFourNetworkView;
-import lzf.baselibrary.base.BaseOneNetworkView;
+import lzf.api.LzfHttpBinder;
+import lzf.api.NetUtils;
 import lzf.baselibrary.base.BaseTwoNetworkView;
-import lzf.baselibrary.bean.CityBean;
 import lzf.baselibrary.bean.ConfigBean;
 import lzf.baselibrary.bean.GuideBean;
-import lzf.baselibrary.bean.UserBean;
 import lzf.baselibrary.impl.BasePresenterImpl;
-import lzf.baselibrary.model.BaseRequestMode;
-import lzf.baselibrary.network.RxAPIService;
-import retrofit2.Call;
-import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
-import retrofit2.converter.gson.GsonConverterFactory;
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 @Route(path = "/moduleMain/test")
 public class TestActivity extends AppCompatActivity implements BaseTwoNetworkView<List<GuideBean>, ConfigBean> {
     private TextView start, second;
     private BasePresenterImpl mBasePresenter;
-    Looper
+    private ImageView imageView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
+
     }
 
     public void next(final View view) {
@@ -54,7 +44,8 @@ public class TestActivity extends AppCompatActivity implements BaseTwoNetworkVie
         start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                test();
+                LzfHttpBinder.bind(TestActivity.this);
+//                test();
 //                mBasePresenter.getData(apiService.getConfig(), TestActivity.this);
             }
         });
@@ -88,6 +79,7 @@ public class TestActivity extends AppCompatActivity implements BaseTwoNetworkVie
         //todo findView
         start = (TextView) findViewById(R.id.start);
         second = (TextView) findViewById(R.id.second);
+        imageView= (ImageView) findViewById(R.id.image);
     }
 
     @Override
@@ -95,85 +87,32 @@ public class TestActivity extends AppCompatActivity implements BaseTwoNetworkVie
         //todo 创建presenter
         mBasePresenter = new BasePresenterImpl(TestActivity.this);
     }
-
-    public void test() {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://new.antwk.com/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                .build();
-        RxAPIService apiService = retrofit.create(RxAPIService.class);
-        apiService.getStartView(2)
-                .subscribeOn(Schedulers.io())
-                .unsubscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<BaseRequestMode<List<GuideBean>>>() {
-                    @Override
-                    public void onCompleted() {
-                        Log.e("lzf", "onCompleted");
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        Log.e("lzf", e.getMessage());
-                    }
-
-                    @Override
-                    public void onNext(BaseRequestMode<List<GuideBean>> userBeanBaseRequestMode) {
-                        Message message = Message.obtain();
-                        message.obj = userBeanBaseRequestMode;
-                        myHandler.sendMessage(message);
-                    }
-                });
+    @Http(url = "test", type = HttpType.POST)
+    public void test(String test){
+        Log.e("lzf_test",test);
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                //从网络获取数据
+//                final String response = NetUtils.post("111","2");
+//                //向Handler发送处理操作
+//                Log.e("Lzf-test","网络请求的数据是："+response);
+//            }
+//        }).start();
     }
 
-    private Handler myHandler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            Bundle bundle = msg.getData();
-        }
-    };
-
-    class MyHttp {
-        private Handler myHandler = new Handler() {
-            @Override
-            public void handleMessage(Message msg) {
-                super.handleMessage(msg);
-                Bundle bundle = msg.getData();
-            }
-        };
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://new.antwk.com/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                .build();
-        RxAPIService apiService = retrofit.create(RxAPIService.class);
-
-        public void test() {
-            apiService.getStartView(2)
-                    .subscribeOn(Schedulers.io())
-                    .unsubscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Subscriber<BaseRequestMode<List<GuideBean>>>() {
-                                          @Override
-                                          public void onCompleted() {
-                                              Log.e("lzf", "onCompleted");
-                                          }
-
-                                          @Override
-                                          public void onError(Throwable e) {
-                                              Log.e("lzf", e.getMessage());
-                                          }
-
-                                          @Override
-                                          public void onNext(BaseRequestMode<List<GuideBean>> userBeanBaseRequestMode) {
-                                              Message message = Message.obtain();
-                                              message.obj = userBeanBaseRequestMode;
-                                              myHandler.sendMessage(message);
-                                          }
-                                      }
-                            );
-        }
+    @Http(url = "test2", type = HttpType.POST)
+    public void test2(String test){
+        Log.e("lzf_test2",test);
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                //从网络获取数据
+//                final String response = NetUtils.post("111","2");
+//                //向Handler发送处理操作
+//                Log.e("Lzf-test","网络请求的数据是："+response);
+//            }
+//        }).start();
     }
+
 }
