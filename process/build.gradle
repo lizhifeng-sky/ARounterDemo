@@ -7,4 +7,5 @@ dependencies {
     compile project(':annotation')
     sourceCompatibility = 1.7
     targetCompatibility = 1.7
+    compile project(':api')
 }

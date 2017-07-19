@@ -1,4 +1,4 @@
-package com.example.myapi;
+package com.example;
 
 import android.accounts.NetworkErrorException;
 
@@ -18,6 +18,7 @@ public class NetUtils {
         HttpURLConnection conn = null;
         try {
             // 创建一个URL对象
+            url="http://new.antwk.com/api/app/startView";
             URL mURL = new URL(url);
             // 调用URL的openConnection()方法,获取HttpURLConnection对象
             conn = (HttpURLConnection) mURL.openConnection();
@@ -28,7 +29,7 @@ public class NetUtils {
             conn.setDoOutput(true);// 设置此方法,允许向服务器输出内容
 
             // post请求的参数
-            String data = content;
+            String data = "2";
             // 获得一个输出流,向服务器写数据,默认情况下,系统不允许向服务器输出内容
             OutputStream out = conn.getOutputStream();// 获得一个输出流,向服务器写数据
             out.write(data.getBytes());
@@ -39,8 +40,7 @@ public class NetUtils {
             if (responseCode == 200) {
 
                 InputStream is = conn.getInputStream();
-                String response = getStringFromInputStream(is);
-                return response;
+                return getStringFromInputStream(is);
             } else {
                 throw new NetworkErrorException("response status is "+responseCode);
             }

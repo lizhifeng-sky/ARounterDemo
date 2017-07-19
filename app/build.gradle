@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-apply plugin: 'com.neenbedankt.android-apt'
+//apply plugin: 'com.neenbedankt.android-apt'
 android {
     compileSdkVersion Integer.parseInt(COMPILE_SDK_VERSION)
     buildToolsVersion BUILDTOOLS_VERSION
@@ -58,6 +58,6 @@ dependencies {
     }
     compile project(':annotation')
     compile project(':api')
-    apt project(':process')
+    annotationProcessor  project(':process')
 }
 

@@ -3,6 +3,8 @@ package lzf.api;
 import android.app.Activity;
 import android.util.Log;
 
+import com.example.NetUtils;
+
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 

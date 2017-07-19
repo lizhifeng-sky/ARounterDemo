@@ -1,4 +1,7 @@
-include ':app', ':annotation', ':process', ':api',
+include ':app',
+        ':annotation',
+        ':process',
+        ':api',
         ':baselibrary',
         ':moduleone',
         ':module_two'

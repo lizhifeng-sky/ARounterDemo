@@ -1,7 +1,7 @@
 package lzf.arounter.demo;
 
+import android.app.Activity;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -10,22 +10,20 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.example.Http;
 import com.example.HttpType;
 
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Method;
 import java.util.List;
 
 import lzf.api.LzfHttpBinder;
-import lzf.api.NetUtils;
 import lzf.baselibrary.base.BaseTwoNetworkView;
 import lzf.baselibrary.bean.ConfigBean;
 import lzf.baselibrary.bean.GuideBean;
 import lzf.baselibrary.impl.BasePresenterImpl;
 
 @Route(path = "/moduleMain/test")
-public class TestActivity extends AppCompatActivity implements BaseTwoNetworkView<List<GuideBean>, ConfigBean> {
+public class TestActivity extends Activity implements BaseTwoNetworkView<List<GuideBean>, ConfigBean> {
     private TextView start, second;
     private BasePresenterImpl mBasePresenter;
     private ImageView imageView;
+    private int page=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +43,7 @@ public class TestActivity extends AppCompatActivity implements BaseTwoNetworkVie
             @Override
             public void onClick(View view) {
                 LzfHttpBinder.bind(TestActivity.this);
+                page++;
 //                test();
 //                mBasePresenter.getData(apiService.getConfig(), TestActivity.this);
             }
@@ -87,18 +86,9 @@ public class TestActivity extends AppCompatActivity implements BaseTwoNetworkVie
         //todo 创建presenter
         mBasePresenter = new BasePresenterImpl(TestActivity.this);
     }
-    @Http(url = "test", type = HttpType.POST)
+    @Http(url = "test" , type = HttpType.POST)
     public void test(String test){
         Log.e("lzf_test",test);
-//        new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                //从网络获取数据
-//                final String response = NetUtils.post("111","2");
-//                //向Handler发送处理操作
-//                Log.e("Lzf-test","网络请求的数据是："+response);
-//            }
-//        }).start();
     }
 
     @Http(url = "test2", type = HttpType.POST)
