@@ -1,0 +1,7 @@
+apply plugin: 'java'
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile files('libs/asm-3.2.jar')
+    compile 'cglib:cglib:3.2.5'
+}

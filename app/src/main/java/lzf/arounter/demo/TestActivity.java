@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.example.Http;
 import com.example.HttpType;
@@ -29,7 +30,6 @@ public class TestActivity extends Activity implements BaseTwoNetworkView<List<Gu
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
-
     }
 
     public void next(final View view) {
@@ -45,7 +45,7 @@ public class TestActivity extends Activity implements BaseTwoNetworkView<List<Gu
                 LzfHttpBinder.bind(TestActivity.this);
                 page++;
 //                test();
-//                mBasePresenter.getData(apiService.getConfig(), TestActivity.this);
+                mBasePresenter.getData(apiService.getConfig(), TestActivity.this);
             }
         });
     }

@@ -10,6 +10,7 @@
       <module fileurl="file://$PROJECT_DIR$/module_two/module_two.iml" filepath="$PROJECT_DIR$/module_two/module_two.iml" />
       <module fileurl="file://$PROJECT_DIR$/moduleone/moduleone.iml" filepath="$PROJECT_DIR$/moduleone/moduleone.iml" />
       <module fileurl="file://$PROJECT_DIR$/process/process.iml" filepath="$PROJECT_DIR$/process/process.iml" />
+      <module fileurl="file://$PROJECT_DIR$/proxy/proxy.iml" filepath="$PROJECT_DIR$/proxy/proxy.iml" />
     </modules>
   </component>
 </project>
